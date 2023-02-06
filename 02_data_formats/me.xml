@@ -1,0 +1,9 @@
+<!-- TODO: version  -->
+<me>
+    <name>Lars</name>
+    <age>33</age>
+    <hobbies>
+        <hobby>prog-rock</hobby>
+        <hobby>smashing things</hobby>
+    </hobbies>
+</me>

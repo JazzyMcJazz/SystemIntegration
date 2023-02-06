@@ -1,0 +1,1 @@
+new my_module.ClassA();
