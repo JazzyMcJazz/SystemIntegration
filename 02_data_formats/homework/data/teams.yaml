@@ -1,0 +1,21 @@
+teams:
+    - team:
+        name: Heroic
+        rank: 1
+        roster:
+            - cadiaN
+            - stavn
+            - TeSeS
+            - sjuush
+            - jabbi
+        coach: Xizt
+    - team:
+        name: Astralis
+        rank: 14
+        roster:
+            - Xyp9x
+            - gla1ve
+            - device
+            - blameF
+            - Buzz
+        coach: casle
