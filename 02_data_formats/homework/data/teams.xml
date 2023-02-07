@@ -1,0 +1,26 @@
+<teams>
+    <team>
+        <name>Heroic</name>
+        <rank>1</rank>
+        <roster>
+            <player>cadiaN</player>
+            <player>stavn</player>
+            <player>TeSeS</player>
+            <player>sjuush</player>
+            <player>jabbi</player>
+        </roster>
+        <coach>Xizt</coach>
+    </team>
+    <team>
+        <name>Astralis</name>
+        <rank>14</rank>
+        <roster>
+            <player>Xyp9x</player>
+            <player>gla1ve</player>
+            <player>device</player>
+            <player>blameF</player>
+            <player>Buzz</player>
+        </roster>
+        <coach>casle</coach>
+    </team>
+</teams>

@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "dependencies": {
+    "csv-parse": "^5.3.4",
+    "xml-js": "^1.6.11",
+    "yaml": "^2.2.1"
+  }
+}
