@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse
-from parsers import JsonParser, XmlParser, CsvParser, YamlParser, TxtParser, PickleParser
+from parsers import JsonParser, XmlParser, CsvParser, YamlParser, TxtParser, Marshal
+import requests
 
 app = FastAPI()
 
@@ -18,7 +19,9 @@ def home():
             <a href='/csv' style="color: skyblue"><h2>CSV</h2></a>
             <a href='/yaml' style="color: skyblue"><h2>YAML</h2></a>
             <a href='/txt' style="color: skyblue"><h2>TXT</h2></a>
-            <a href='/pickle' style="color: skyblue"><h2>PICKLE</h2></a>
+            <a href='/pickle' style="color: skyblue"><h2>MARSHAL JSON WITH PICKLE</h2></a>
+            <a href='/pickle/deserialize' style="color: skyblue"><h2>DESERIALIZE PICKLED JSON</h2></a>
+
         </body>
     </html>
     """
@@ -44,7 +47,19 @@ def yaml():
 def txt():
     return TxtParser.parse()
 
+# Serialize / Marshal with Pickle
 @app.get("/pickle")
 def pickle():
-    PickleParser.serialize()
-    return PickleParser.deserialize()
+    data = JsonParser.parse()
+    serialized = Marshal.serialize(data)
+    
+    return Response(
+        serialized, 
+        media_type="application/octet-stream",
+    )
+
+@app.get("/pickle/deserialize")
+def pickle_deserialize():
+    response = requests.get("http://localhost:8000/pickle")
+    deserialized = Marshal.deserialize(response.content)
+    return deserialized
