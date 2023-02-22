@@ -6,8 +6,14 @@ class XmlParser:
         pass
 
     def parse():
-        # open('../data/teams.xml', 'r')
         tree = ET.parse(open('../data/teams.xml', 'r'))
+        return XmlParser.__parse(tree)
+    
+    def parseUpload(file):
+        tree = ET.parse(file)
+        return XmlParser.__parse(tree)
+    
+    def __parse(tree):
         root = tree.getroot()
         
         teams = []

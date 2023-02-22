@@ -5,31 +5,31 @@ import { parse } from 'csv-parse/sync';
 import yaml from 'yaml'
 import teamsJSON from '../data/teams.json' assert { type: 'json' };
 
-export function parseJSON() {
-    return teamsJSON; // redundant, I know. Just to keep the style.
+export function parseJSON(data) {
+    return data ? JSON.parse(data) : teamsJSON;
 }
 
-export function parseXML() {
+export function parseXML(data) {
     const file = fs.readFileSync(path.resolve() + '/../data/teams.xml');
-    const parsed = xml.xml2js(file, { compact: true }).teams.team;
+    const parsed = xml.xml2js(data ? data : file, { compact: true }).teams.team;
     return assimilateParsedXML(parsed);
 } 
 
-export function parseCSV() {
+export function parseCSV(data) {
     const file = fs.readFileSync(path.resolve() + '/../data/teams.csv');
-    const parsed = parse(file);
+    const parsed = parse(data ? data : file);
     return assimilateParsedCSV(parsed);
 }
 
-export function parseYAML() {
+export function parseYAML(data) {
     const file = fs.readFileSync(path.resolve() + '/../data/teams.yaml');
-    const parsed = yaml.parse(file.toString());
+    const parsed = yaml.parse(data ? data.toString() : file.toString());
     return assimilateParsedYAML(parsed.teams);
 }
 
-export function parseTXT() {
+export function parseTXT(data) {
     const file = fs.readFileSync(path.resolve() + '/../data/teams.txt');
-    return assimilateTXT(file.toString());
+    return assimilateTXT(data ? data.toString() : file.toString());
 }
 
 
