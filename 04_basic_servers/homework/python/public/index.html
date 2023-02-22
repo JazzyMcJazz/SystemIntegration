@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Parser</title>
+</head>
+<body>
+    <body style="background-color: black; color: white; text-align: center">
+        <h1>Select data type to parse:</h1>
+        <a href='/json' style="color: skyblue"><h2>JSON</h2></a>
+        <a href='/xml' style="color: skyblue"><h2>XML</h2></a>
+        <a href='/csv' style="color: skyblue"><h2>CSV</h2></a>
+        <a href='/yaml' style="color: skyblue"><h2>YAML</h2></a>
+        <a href='/txt' style="color: skyblue"><h2>TXT</h2></a>
+        
+        <br/>
+        <br/>
+        <form method="post" enctype="multipart/form-data" action="/upload">
+            <h2>Upload File:</h2>
+            <input type="file" name="file" id="file">
+            <br/>
+            <br/>
+            <input type="submit" value="Upload">
+        </form>
+    </body>
+        
+</body>
+</html>

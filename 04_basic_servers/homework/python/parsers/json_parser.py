@@ -7,3 +7,6 @@ class JsonParser:
 
     def parse():
         return json.load(open('../data/teams.json', 'r'))
+
+    def parseUpload(file):
+        return json.load(file)

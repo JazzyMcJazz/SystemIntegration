@@ -1,31 +1,14 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, UploadFile
 from fastapi.responses import HTMLResponse
 from parsers import JsonParser, XmlParser, CsvParser, YamlParser, TxtParser, Marshal
 import requests
+import pkg_resources
 
 app = FastAPI()
 
 @app.get("/")
 def home():
-    html = """
-    <html>
-        <head>
-            <title>Data Parser</title>
-        </head>
-        <body style="background-color: black; color: white; text-align: center">
-            <h1>Select data type to parse:</h1>
-            <a href='/json' style="color: skyblue"><h2>JSON</h2></a>
-            <a href='/xml' style="color: skyblue"><h2>XML</h2></a>
-            <a href='/csv' style="color: skyblue"><h2>CSV</h2></a>
-            <a href='/yaml' style="color: skyblue"><h2>YAML</h2></a>
-            <a href='/txt' style="color: skyblue"><h2>TXT</h2></a>
-            <a href='/pickle' style="color: skyblue"><h2>MARSHAL JSON WITH PICKLE</h2></a>
-            <a href='/pickle/deserialize' style="color: skyblue"><h2>DESERIALIZE PICKLED JSON</h2></a>
-
-        </body>
-    </html>
-    """
-    return HTMLResponse(content=html, status_code=200)
+    return HTMLResponse(pkg_resources.resource_string(__name__, 'public/index.html'))
 
 @app.get("/json")
 def json():
@@ -46,6 +29,23 @@ def yaml():
 @app.get("/txt")
 def txt():
     return TxtParser.parse()
+
+@app.post("/upload")
+async def upload(file: UploadFile):
+    match file.content_type:
+        case "application/json":
+            return JsonParser.parseUpload(file.file)
+        case "text/xml":
+            return XmlParser.parseUpload(file.file)
+        case "text/csv":
+            return CsvParser.parseUpload(file.file)
+        case "application/x-yaml":
+            return YamlParser.parseUpload(file.file)
+        case "text/plain":
+            return await TxtParser.parseUpload(file)
+        case _:
+            return "Unsupported file type"
+
 
 # Serialize / Marshal with Pickle
 @app.get("/pickle")

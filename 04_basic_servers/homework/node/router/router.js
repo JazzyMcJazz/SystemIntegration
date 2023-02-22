@@ -1,26 +1,11 @@
 import { Router } from "express";
+import multer from "multer";
 import * as Parser from '../parse.js';
 
 const router = Router();
 
-const html = `
-        <html>
-            <head>
-                <title>Data Parser</title>
-            </head>
-            <body style="background-color: black; color: white; text-align: center">
-                <h1>Select data type to parse:</h1>
-                <a href='/json' style="color: skyblue"><h2>JSON</h2></a>
-                <a href='/xml' style="color: skyblue"><h2>XML</h2></a>
-                <a href='/csv' style="color: skyblue"><h2>CSV</h2></a>
-                <a href='/yaml' style="color: skyblue"><h2>YAML</h2></a>
-                <a href='/txt' style="color: skyblue"><h2>TXT</h2></a>
-            </body>
-        </html>
-    `;
-
 router.get('/', (req, res) => {
-    res.send(html);
+    res.sendFile('index.html', { root: './public' });
 });
 
 router.get('/json', (req, res) => {
@@ -45,6 +30,37 @@ router.get('/yaml', (req, res) => {
 
 router.get('/txt', (req, res) => {
     const data = Parser.parseTXT();
+    res.send(data);
+});
+
+// Upload
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+router.post('/upload', upload.single('file'), (req, res) => {
+    let data;
+    switch (req.file.mimetype) {
+        case 'application/json':
+            data = Parser.parseJSON(req.file.buffer);
+            break;
+        case 'text/xml':
+            data = Parser.parseXML(req.file.buffer);
+            break;
+        case 'text/csv':
+            data = Parser.parseCSV(req.file.buffer);
+            break;
+        case 'application/x-yaml':
+            data = Parser.parseYAML(req.file.buffer);
+            break;
+        case 'text/plain':
+            data = Parser.parseTXT(req.file.buffer);
+            break;
+        default:
+            res.status(400).send('Invalid file type');
+            return;
+    }
+    
     res.send(data);
 });
 
