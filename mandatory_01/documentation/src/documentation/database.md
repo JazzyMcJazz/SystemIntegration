@@ -4,7 +4,7 @@ Database Integration
 This documentation describes how to access and interact with the `systint` database hosted at www.jazzymcjazz.dk. 
 
 ***
-### <a href="/mro">Data Definitions</a>
+### <a href="/schema">Data Definitions</a>
 ***
 
 ### **Database Users**

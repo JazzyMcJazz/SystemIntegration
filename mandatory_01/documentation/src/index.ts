@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
     res.send(converter.makeHtml(doc + style));
 });
 
-app.get("/mro", (req, res) => {
+app.get("/schema", (req, res) => {
     const doc = fs.readFileSync(path.join(path.resolve(), "./src/documentation/systint_mro_docs.html"), "utf8");
     res.send(doc);
 });
