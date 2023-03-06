@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        .content {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
+    </style>
+    <title>SSE</title>
+</head>
+<body>
+    <div class="content">
+        <h3 id="bob">Bob Connecting...</h3>
+        <h4>Server Time:</h4> 
+        <span id="time"></span>
+    </div>  
+
+    <script>
+        const time = document.getElementById('time');
+        const bob = document.getElementById('bob');
+
+        const eventSource = new EventSource('/sync-time');
+        eventSource.onmessage = (event) => {
+            const data = new Date(JSON.parse(event.data));
+            time.innerText = data.toLocaleTimeString();
+        }
+
+        eventSource.onopen = (message) => {
+            bob.innerText = "Bob Connected";
+        }
+
+        eventSource.onerror = (error) => {
+            if (error.target.readyState === EventSource.CLOSED) {
+                console.log("Bob Closed!!");
+            } else if (error.target.readyState === EventSource.CONNECTING) {
+                bob.innerText = "Bob is trying to reconnect..";
+            }
+        }
+    </script>
+</body>
+</html>

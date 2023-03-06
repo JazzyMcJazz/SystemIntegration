@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+        .content {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 2rem;
+            margin-top:100px
+        }
+    </style>
+    <title>SSE</title>
+</head>
+<body>
+    <div class="content">
+        <h3 id="bob">Bob Connecting...</h3>
+        <h4>Server Time:</h4> 
+        <span id="time"></span>
+    </div>  
+
+    <script>
+        const bob = document.getElementById('bob');
+        const time = document.getElementById('time');
+        const eventSource = new EventSource('/sse');
+        
+        eventSource.addEventListener("new_message", (event) => {
+            time.innerText = event.data.slice(0, 23);
+        })
+
+        // eventSource.onmessage = (event) => {
+        //     const data = event.data;
+        //     time.innerText = data;
+        // }
+
+        // eventSource.onopen = (event) => {
+        //     bob.innerText = 'Bob Connected';
+        // }
+
+        // eventSource.onerror = (event) => {
+        //     if (eventSource.readyState === EventSource.CLOSED) {
+        //         bob.innerText = 'Bob Disconnected';
+        //     } else if (eventSource.readyState === EventSource.CONNECTING) {
+        //         bob.innerText = 'Bob Reconnecting...';
+        //     }
+        // }
+
+        // eventSource.end = () => {
+        //     eventSource.close();
+        //     bob.innerText = 'Bob Disconnected';
+        // }
+        
+    </script>
+</body>
+</html>
