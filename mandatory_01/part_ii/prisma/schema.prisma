@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Webhook {
+  id        Int      @id @default(autoincrement())
+  url       String
+  status    String  @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  triggers  Triggers?
+  payload   Payload?
+}
+
+model Triggers {
+  id          Int      @id @default(autoincrement())
+  message     Boolean
+  connection  Boolean
+  disconnect  Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  webhook     Webhook  @relation(fields: [id], references: [id])
+}
+
+model Payload {
+  id          Int      @id @default(autoincrement())
+  username    Boolean
+  message     Boolean
+  timestamp   Boolean
+  history     Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+  webhook     Webhook  @relation(fields: [id], references: [id])
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  username  String
+  message   String
+  timestamp DateTime @default(now())
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+}
