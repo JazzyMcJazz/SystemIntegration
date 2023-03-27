@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unknown</title>
+</head>
+<body>
+    
+    <h2>Time</h2>
+
+    <h3>From Fastapi</h3>
+    <div class="timestamp-fastapi"></div>
+
+    <h3>From Node</h3>
+    <div class="timestamp-node"></div>
+
+    <script>
+        fetch('http://localhost:3001/timestamp')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.timestamp-fastapi').innerText = data;
+        });
+
+        fetch('http://localhost:3002/timestamp')
+        .then(response => response.json())
+        .then(data => {
+            document.querySelector('.timestamp-node').innerText = data;
+        });
+    </script>
+</body>
+</html>
