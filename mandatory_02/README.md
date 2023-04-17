@@ -60,7 +60,14 @@ The SupaBase REST API address and the `anon` key [(see SupaBase Setup)](#setup-s
 # Clone project
 git clone --depth 1 https://github.com/JazzyMcJazz/SystemIntegration.git
 
-cd SystemIntegration/mandatory_02/supabase/docker
+# Navigate to project folder
+cd SystemIntegration/mandatory_02
+
+# Clone SupaBase into project folder (doing it from here enables the use of a convenience script, see below)
+git clone --depth 1 https://github.com/supabase/supabase
+
+# Go to the docker folder
+cd supabase/docker
 
 # Copy the fake env vars
 cp .env.example .env
