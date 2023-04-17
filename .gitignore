@@ -15,6 +15,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!mandatory_02/App/src/lib
 lib64/
 parts/
 sdist/
