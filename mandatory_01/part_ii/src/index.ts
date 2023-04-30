@@ -1,6 +1,6 @@
 import http from 'http';
 import express from 'express';
-import { Server } from 'socket.io';
+import { WebSocketServer } from 'ws';
 import cors from 'cors';
 import path from 'path';
 import Socket from './websocket/socket.js';
@@ -8,10 +8,8 @@ import webhookRouter from './router/webhooks.js';
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: { origin: '*',}
-});
-new Socket(io);
+const wsServer = new WebSocketServer({ server });
+new Socket(wsServer);
 
 app.use(express.json());
 app.use(cors());
