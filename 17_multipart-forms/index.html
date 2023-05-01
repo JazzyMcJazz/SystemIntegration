@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bob</title>
+</head>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <h1>Multipart/form-data</h1>
+    <form method="post" action="http://127.0.0.1:8000/form" style="display: flex; flex-direction: column; width: 50%;">
+        <label for="username">Name</label>
+        <input name="username" id="username" type="text" />
+        <label for="password">Password</label>
+        <input name="password" id="password" type="password" />
+
+        <button>Submit</button>
+    </form>
+    
+    <span style="width: 80%; height: 1px; background-color: black; margin: 20px 0;"></span>
+    
+    <form action="http://127.0.0.1:8000/upload" method="post" enctype="multipart/form-data">
+        
+        <label for="file">Upload file</label>
+        <input name="file" id="file`" type="file" accept="image/*" />
+        <button>Submit</button>
+    </form>
+    
+</body>
+</html>
