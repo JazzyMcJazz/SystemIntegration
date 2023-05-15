@@ -241,3 +241,6 @@ dist
 *.vscode
 uploads/
 database.db
+movies.db
+/target
+/mandatory_02_II_web_scraper/output/
