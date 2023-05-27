@@ -36,12 +36,14 @@ impl Spider {
         while let Some(url) = queue.pop() {
             let id = url.split("/").collect::<Vec<_>>()[2];
 
+            // check if database is full
             let db_size = database::get_database_filesize()?;
             if db_size > 100_000_000 { // 100MB
                 println!("Database is full. Stopping crawler...");
                 break;
             }
 
+            // check if url has been visited
             if visited_urls.contains(&url) {
                 print!("Visited: {} - ", visited_urls.len());
                 print!("Queue: {} - ", queue.len());
@@ -49,6 +51,7 @@ impl Spider {
                 continue;
             }
 
+            // add url to visited
             visited_urls.insert(url.clone());
 
             // sleep 500ms
@@ -58,6 +61,7 @@ impl Spider {
             print!("Queue: {} - ", queue.len());
             println!("Database size: {}MB", format!("{:.2}", db_size as f32 / 1024.0 / 1024.0));
 
+            // get page and parse
             let url = format!("{}{}", self.home_page, url);
             let page = get_page(&url).await?;
             let (title, plot, rating, links) = parse_page(page);
@@ -149,6 +153,7 @@ fn filter_links(document: &Html) -> Vec<String> {
 
         let fragments = link.split("/").collect::<Vec<_>>();
 
+        // check if link is a movie title page
         let condition = {
             link.starts_with("/title") &&
             fragments.len() == 4 &&
@@ -159,6 +164,7 @@ fn filter_links(document: &Html) -> Vec<String> {
             continue;
         }
         
+        // add link to links vector (ex. /title/tt1234567)
         links.push(fragments[0..3].join("/"));
     }
     

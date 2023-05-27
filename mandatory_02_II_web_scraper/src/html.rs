@@ -2,8 +2,15 @@ use std::fs;
 use crate::database::Movie;
 
 pub fn generate_html(mut movies: Vec<Movie>, sort_by: &str) {
-    // mkdir -p /output if not exists
+    
+    
     fs::create_dir_all("output").unwrap();
+
+    // remove all files in the output folder
+    for entry in fs::read_dir("output").unwrap() {
+        let entry = entry.unwrap();
+        fs::remove_file(entry.path()).unwrap();
+    }
 
     match sort_by {
         "title" => movies.sort_by(|a, b| a.title.partial_cmp(&b.title).unwrap()),
