@@ -8,6 +8,8 @@ import webhookRouter from './router/webhooks.js';
 
 const app = express();
 const server = http.createServer(app);
+
+// Websocket
 const wsServer = new WebSocketServer({ server });
 new Socket(wsServer);
 
