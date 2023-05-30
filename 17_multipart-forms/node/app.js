@@ -13,11 +13,13 @@ const storage = multer.diskStorage({
         if (filenameParts.length <= 1) {
             cb(new Error('File has no extension: ' + file.originalname));
         }
-
+        
         const extension = filenameParts.pop();
-        const originalFilename = filenameParts.join('.').replaceAll(' ', '');
+        const originalFilename = filenameParts.join('.')
+            .replaceAll(/[^a-zA-Z0-9_.- ]/g, ''); // Sanitize filename
         const uniqueSuffix = Date.now() + '_' + Math.round(Math.random() * 1E9);
         const filename = uniqueSuffix + '___' + originalFilename + '.' + extension;
+        
         cb(null, filename);
     },
 });
